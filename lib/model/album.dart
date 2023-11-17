@@ -6,7 +6,7 @@ enum Gender {
   hiphop,
   rap,
   metal,
-  jaz,
+  jazz,
   blues,
   reageton,
   undefined
@@ -14,14 +14,14 @@ enum Gender {
 
 Map generos = {
   Gender.pop: "Pop",
-  Gender.blues: "Bules",
+  Gender.blues: "Blues",
   Gender.classic: "Música clásica",
   Gender.hiphop: "Hip hop",
-  Gender.jaz: "Jazz",
+  Gender.jazz: "Jazz",
   Gender.latin: "Música latina",
   Gender.metal: "Rock-Metal",
   Gender.rap: "Rap",
-  Gender.reageton: "Reggaeton",
+  Gender.reageton: "Regeaton",
   Gender.rock: "Rock",
   Gender.undefined: "No definido",
 };
@@ -31,13 +31,29 @@ class Album {
   late String _artista;
   late int _anio;
   late Gender _gender;
+
   Album(this._titulo, this._artista, this._anio, this._gender);
+
   Album.vacio() {
     _titulo = "";
     _artista = "";
     _anio = 0;
     _gender = Gender.undefined;
   }
+
+  Album.fromJson(Map json)
+      : _titulo = json['titulo'],
+        _artista = json['artista'],
+        _anio = json['anio'],
+        _gender = Gender.values.byName(json['gender']);
+
+  Map toJson() => {
+        'titulo': _titulo,
+        'artista': _artista,
+        'anio': _anio,
+        'gender': _gender.name,
+      };
+
   String get titulo => _titulo;
   String get artista => _artista;
   int get anio => _anio;
